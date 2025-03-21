@@ -121,4 +121,21 @@ If you're experiencing issues with the application:
 
 ## License
 
-This project is open source and available under the MIT License. 
+This project is open source and available under the MIT License.
+
+### Additional Shortcuts and Features
+
+- **Quick Language Toggle**: Press `CTRL+ALT+L` to quickly switch between language pairs
+- **Search History**: Use the search bars above each column to find previous translations
+- **Message Actions**: Right-click any message to copy or retranslate it
+- **Keyboard Navigation**: 
+  - `CTRL+Up/Down`: Navigate through translation history
+  - `CTRL+C`: Copy selected message
+
+### Smart Features
+
+- **Intelligent Text Selection**: Automatically detects and captures text using multiple methods
+- **Language Detection**: Automatically identifies the source language
+- **Format Preservation**: Maintains original text formatting in translations
+- **Translation Queue**: Efficiently handles multiple translation requests
+- **Error Recovery**: Automatic retry and fallback mechanisms for reliable operation 

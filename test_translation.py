@@ -9,17 +9,37 @@ def test_translation():
     
     # Load configuration
     try:
-        with open("config.json", "r") as f:
-            config = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        print("Error: Could not load config.json")
+        # Read environment variables from .env file
+        with open(".env", "r") as f:
+            env_content = f.read()
+            
+        # Parse .env file content
+        config = {}
+        for line in env_content.strip().split('\n'):
+            if line and not line.startswith('#'):
+                key, value = line.split('=', 1)
+                config[key.strip()] = value.strip().strip('"').strip("'")
+                
+        # Create nested structure if needed
+        if 'GROQ_API_KEY' in config:
+            api_key = config['GROQ_API_KEY']
+        else:
+            print("Error: API_KEY not found in .env file")
+            return
+    except FileNotFoundError:
+        print("Error: Could not find .env file")
+        return
+    except Exception as e:
+        print(f"Error loading configuration: {str(e)}")
         return
     
     # Get API key
-    api_key = config["api"]["api_key"]
     if not api_key or api_key == "YOUR_API_KEY_HERE":
-        print("Error: Please set your API key in config.json")
+        print("Error: Please set your API key in .env file")
         return
+    
+    # Get model name from config or use default
+    model = config.get('MODEL', 'llama3-8b-8192')
     
     # Test phrases
     test_phrases = [
@@ -53,7 +73,7 @@ def test_translation():
         }
         
         data = {
-            "model": config["api"]["model"],
+            "model": model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.3,
             "max_tokens": 1024
